@@ -1,0 +1,23 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-buylist-dev-85719-authRole",
+            "UnauthRoleArn": "arn:aws:iam::188970983837:role/amplify-buylist-dev-85719-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::188970983837:role/amplify-buylist-dev-85719-authRole",
+            "Region": "ap-northeast-1",
+            "DeploymentBucketName": "amplify-buylist-dev-85719-deployment",
+            "UnauthRoleName": "amplify-buylist-dev-85719-unauthRole",
+            "StackName": "amplify-buylist-dev-85719",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:188970983837:stack/amplify-buylist-dev-85719/37a33d30-b854-11ea-a081-06d571b61710",
+            "AmplifyAppId": "ddicovdbu0ymo"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "ddicovdbu0ymo",
+                    "type": "manual"
+                }
+            }
+        }
+    }
+}
