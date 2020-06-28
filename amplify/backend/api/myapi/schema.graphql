@@ -1,5 +1,10 @@
-type Todo @model {
+type Menu @model {
   id: ID!
   name: String!
-  description: String
+  materials: [Material]!
+}
+
+type Material {
+  hash: String!
+  name: String!
 }
