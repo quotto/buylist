@@ -1,7 +1,11 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState} from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 import { createMenu } from './graphql/mutations'
 import crypto from 'crypto'
+import styles from './styles'
+import { TextField,Button,IconButton } from '@material-ui/core'
+import ClearButton  from '@material-ui/icons/Clear'
+import MenuInput from './MenuInput'
 
 function Add() {
     const [title,setTitle] = useState('')
@@ -16,6 +20,13 @@ function Add() {
         const new_materials = Object.assign([],materials);
         new_materials.push('')
         setMaterials(new_materials)
+    }
+
+    function deleteMaterials(target_index) {
+        const updated_materials = materials.filter((value,index)=>{
+           return target_index != index 
+        })
+        setMaterials(updated_materials)
     }
 
     function updateMaterials(event,index) {
@@ -46,22 +57,34 @@ function Add() {
     }
    return (
        <div style={styles.container}>
-           <p>{notice}</p>
-          <input type="text"  value={title} onChange={changeTitle} placeholder='メニューの名前を入力'/>
-          <p>買うもの</p>
-           {
-               materials.map((value,index)=>(
-                   <div key={index}><input key={index} type="text" value={value} onChange={(e) => updateMaterials(e, index)} /></div>
-               ))
-           }
-          <div><button onClick={addMaterials}>追加</button></div>
-          <div><button onClick={addMenu}>登録</button></div>
-       </div>
+           <div style={styles.main}>
+               {/* <p>{notice}</p>
+               <TextField value={title} onChange={changeTitle} variant='filled' label='メニューの名前を入力' size="small" />
+               <p>買うもの</p>
+               {
+                   materials.map((value, index) => (
+                       <div style={AddStyles.material} key={index}>
+                           <TextField key={index} value={value} onChange={(e) => updateMaterials(e, index)} style={AddStyles.materialInput} variant="outlined" size="small"/>
+                           <IconButton onClick={(e) => deleteMaterials(index)} color="secondary">
+                                <ClearButton />
+                           </IconButton>
+                        </div>
+                   ))
+               }
+               <Button onClick={addMaterials} color="secondary" variant="outlined">追加</Button> */}
+                <MenuInput notice={notice} deleteMaterials={deleteMaterials} updateMaterials={updateMaterials} changeTitle={changeTitle} materials={materials} title={title} addMaterials={addMaterials} />
+           </div>
+           <div style={styles.footer}>
+                <Button style={AddStyles.footerButton} variant="contained" color="primary" onClick={addMenu}>登録</Button>
+           </div>
+        </div>
    ) 
 }
 
-const styles = {
-  container: { width: 400, margin: '0 auto', display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', padding: 20 },
+const AddStyles = {
+  material: {  marginBottom: 15 },
+  materialInput: { verticalAlign: "middle"},
+  footerButton: { widh: '40%' }
 }
 
 export default Add

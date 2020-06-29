@@ -1,6 +1,9 @@
 import React, {useEffect, useState } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 import { listMenus } from './graphql/queries'
+import { Link } from 'react-router-dom'
+import { Button,Checkbox } from '@material-ui/core'
+import styles from './styles'
 
 
 function List(props) {
@@ -45,32 +48,32 @@ function List(props) {
 
   return (
     <div style={styles.container}>
-      <h2>メニュー一覧</h2>
-      {
-        menus.map((menu, index) => (
-          <div key={menu.id ? menu.id : index} style={styles.menu}>
-            <input type="checkbox" id={menu.id} checked={checked_flg[menu.id]} onChange={checkMenu} style={styles.todoName} />
-            <label htmlFor={menu.id} >{menu.name}</label>
-          </div>
-        ))
-      }
+      <div style={styles.main}>
+        <h2>メニュー一覧</h2>
+        {
+          menus.map((menu, index) => (
+            <div key={menu.id} style={ListStyles.menu}>
+              <Checkbox id={menu.id} checked={checked_flg[menu.id]} onChange={checkMenu} style={ListStyles.menuName} />
+              <label htmlFor={menu.id} ><Link to={{pathname: `./edit/${menu.id}`,state: {menu: menu}}}> {menu.name}</Link></label>
+            </div>
+          ))
+        }
+      </div>
       <div style={styles.footer}>
-        <button onClick={gotoBuyList}>リスト</button>
-        <button onClick={gotoAdd}>追加</button>
+        {/* <button style={styles.footerButton} onClick={gotoBuyList}>リスト</button> */}
+        <Button style={ListStyles.footerButton} onClick={gotoBuyList} variant="contained" color="primary">リスト</Button>
+        <Button style={ListStyles.footerButton} onClick={gotoAdd} variant="contained" color="primary">追加</Button>
       </div>
     </div>
   )
 }
 
-const styles = {
-  container: { width: 400, margin: '0 auto', display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', padding: 20 },
+
+const ListStyles = {
   menu: {  marginBottom: 15 },
-  todo: {  marginBottom: 15 },
   input: { border: 'none', backgroundColor: '#ddd', marginBottom: 10, padding: 8, fontSize: 18 },
-  todoName: { fontSize: 20, fontWeight: 'bold' },
-  todoDescription: { marginBottom: 0 },
-  button: { backgroundColor: 'black', color: 'white', outline: 'none', fontSize: 18, padding: '12px 0px' },
-  footer: {width: '100%',position: 'absolute', bottom: '0'}
+  menuName: { fontSize: 20, fontWeight: 'bold' },
+  footerButton: { width: '40%', margin: '0 5%'}
 }
 
 export default List;
