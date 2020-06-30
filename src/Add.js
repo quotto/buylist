@@ -58,20 +58,6 @@ function Add() {
    return (
        <div style={styles.container}>
            <div style={styles.main}>
-               {/* <p>{notice}</p>
-               <TextField value={title} onChange={changeTitle} variant='filled' label='メニューの名前を入力' size="small" />
-               <p>買うもの</p>
-               {
-                   materials.map((value, index) => (
-                       <div style={AddStyles.material} key={index}>
-                           <TextField key={index} value={value} onChange={(e) => updateMaterials(e, index)} style={AddStyles.materialInput} variant="outlined" size="small"/>
-                           <IconButton onClick={(e) => deleteMaterials(index)} color="secondary">
-                                <ClearButton />
-                           </IconButton>
-                        </div>
-                   ))
-               }
-               <Button onClick={addMaterials} color="secondary" variant="outlined">追加</Button> */}
                 <MenuInput notice={notice} deleteMaterials={deleteMaterials} updateMaterials={updateMaterials} changeTitle={changeTitle} materials={materials} title={title} addMaterials={addMaterials} />
            </div>
            <div style={styles.footer}>
