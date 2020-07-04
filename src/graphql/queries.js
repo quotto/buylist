@@ -9,6 +9,10 @@ export const getMenu = /* GraphQL */ `
       materials {
         hash
         name
+        amount {
+          value
+          unit
+        }
       }
       createdAt
       updatedAt
@@ -28,6 +32,10 @@ export const listMenus = /* GraphQL */ `
         materials {
           hash
           name
+          amount {
+            value
+            unit
+          }
         }
         createdAt
         updatedAt

@@ -19,6 +19,7 @@ function List(props) {
     try {
       const menuData = await API.graphql(graphqlOperation(listMenus))
       const menus = menuData.data.listMenus.items
+      console.log(menus)
       setMenus(menus)
 
       const checked_flg = {}

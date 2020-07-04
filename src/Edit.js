@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom'
 import crypto from 'crypto'
 import styles from './styles'
 import { Button } from '@material-ui/core'
-import MenuInput from './MenuInput'
+import MenuInput,{convertToInputMaterial} from './MenuInput'
+
 
 function Edit(props) {
    const [title,setTitle]  = useState('')
@@ -16,33 +17,15 @@ function Edit(props) {
    useEffect(()=>{
         setTitle(props.location.state.menu.name)
         const materials = props.location.state.menu.materials.map(material=>{
-            return material.name
+            const valid_amount = material.amount && material.amount.value && material.amount.unit
+            return {
+                name: material.name,
+                amount:  valid_amount ? material.amount.value : "",
+                unit: valid_amount ? material.amount.unit : ""
+            }
         })
         setMaterials(materials)
    },[])
-
-    function changeTitle(event) {
-        setTitle(event.target.value)
-    }
-
-    function addMaterials() {
-        const new_materials = Object.assign([],materials);
-        new_materials.push('')
-        setMaterials(new_materials)
-    }
-
-    function deleteMaterials(target_index) {
-        const updated_materials = materials.filter((value,index)=>{
-           return target_index != index 
-        })
-        setMaterials(updated_materials)
-    }
-
-    function updateMaterials(event,index) {
-        const updated_materials = Object.assign([],materials)
-        updated_materials[index] = event.target.value
-        setMaterials(updated_materials)
-    }
 
     async function requestDelete() {
         try {
@@ -57,13 +40,7 @@ function Edit(props) {
     }
 
     async function requestUpdate() {
-        const varibale_materials = []
-        for(const value of materials) {
-            if(typeof(value)!='undefined' && value.length > 0) {
-                const hash = crypto.createHash('sha256').update(value).digest('hex')
-                varibale_materials.push({hash: hash,name: value})
-            }
-        }
+        const varibale_materials = convertToInputMaterial(materials)
         if(Object.keys(varibale_materials).length > 0 && title.length > 0) {
             try {
                 const result = await API.graphql(graphqlOperation(updateMenu,{input: {id: id, name: title,materials:varibale_materials}}))
@@ -78,20 +55,15 @@ function Edit(props) {
    return (
        <div style={styles.container}>
            <div style={styles.main}>
-               {/* <p>{notice}</p>
-               <input type="text" value={title} onChange={changeTitle} placeholder='メニューの名前を入力' />
-               <p>買うもの</p>
-               {
-                   materials.map((value, index) => (
-                       <div key={index} style={ListStyles.material}><input key={index} type="text" value={value} onChange={(e) => updateMaterials(e, index)} /><button onClick={(e) => deleteMaterials(index)} >削除</button></div>
-                   ))
-               }
-               <div ><button onClick={addMaterials}>追加</button></div>
-           </div> */}
-               <MenuInput notice={notice} deleteMaterials={deleteMaterials} updateMaterials={updateMaterials} changeTitle={changeTitle} materials={materials} title={title} addMaterials={addMaterials} />
+               <MenuInput 
+                notice={notice} 
+                materials={materials} 
+                title={title} 
+                setTitle={setTitle}
+                setMaterials={setMaterials}/>
                <div style={styles.footer}>
-                   <Button style={ListStyles.footerButton} onClick={requestUpdate} variant="contained" color="primary">更新</Button>
-                   <Button style={ListStyles.footerButton} onClick={requestDelete} variant="contained" color="secondary">削除</Button>
+                   <Button style={ListStyles.footerButton} onClick={requestUpdate} variant="contained" color="primary" id="updateButton">更新</Button>
+                   <Button style={ListStyles.footerButton} onClick={requestDelete} variant="contained" color="secondary" id="deleteButton">削除</Button>
                </div>
             </div>
        </div>

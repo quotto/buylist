@@ -12,6 +12,10 @@ export const createMenu = /* GraphQL */ `
       materials {
         hash
         name
+        amount {
+          value
+          unit
+        }
       }
       createdAt
       updatedAt
@@ -29,6 +33,10 @@ export const updateMenu = /* GraphQL */ `
       materials {
         hash
         name
+        amount {
+          value
+          unit
+        }
       }
       createdAt
       updatedAt
@@ -46,6 +54,10 @@ export const deleteMenu = /* GraphQL */ `
       materials {
         hash
         name
+        amount {
+          value
+          unit
+        }
       }
       createdAt
       updatedAt

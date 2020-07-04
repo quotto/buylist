@@ -7,4 +7,20 @@ type Menu @model {
 type Material {
   hash: String!
   name: String!
+  amount: Amount
+}
+
+type Amount {
+  value: Float!
+  unit: Unit!
+}
+
+enum Unit {
+  GRAM #g
+  BAG  #袋
+  PACK #パック
+  NUM  #個
+  STUMP #株
+  BUNCH #束
+  HON  #本
 }
