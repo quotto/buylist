@@ -52,12 +52,12 @@ function MenuInput(props) {
                <p>買うもの</p>
                {
                    materials.map((material, index) => (
-                       <div key={index}>
+                       <div style={MenuStyles.materialRow} key={index}>
                            <IconButton onClick={(e) => deleteMaterial(index)} color="secondary" style={MenuStyles.deleteButton}>
                                 <ClearButton />
                            </IconButton>
-                           <TextField key={`name-${index}`} value={material.name} onChange={(e) => updateMaterialName(e, index)} style={MenuStyles.materialNameInput} variant="outlined" size="small" className="inputMaterialName"/>
-                           <TextField key={`amount-${index}`} value={material.amount} onChange={(e)=>updateMaterialAmount(e,index)} variant="outlined" size="small" style={MenuStyles.amountInput} className="inputAmount"/>
+                           <TextField key={`name-${index}`} value={material.name} onChange={(e) => updateMaterialName(e, index)} style={MenuStyles.materialNameInput} variant="outlined" size="small" className="inputMaterialName" label="材料" />
+                           <TextField key={`amount-${index}`} value={material.amount} onChange={(e)=>updateMaterialAmount(e,index)} variant="outlined" size="small" style={MenuStyles.amountInput} className="inputAmount" label="容量"/>
                            <FormControl style={MenuStyles.unitInput}>
                                <Select value={material.unit} onChange={(e)=>updateMaterialUnit(e,index)} className="inputUnit">
                                    <MenuItem value="" />
@@ -73,18 +73,21 @@ function MenuInput(props) {
                         </div>
                    ))
                }
-               <Button onClick={addMaterial} size="small" color="secondary" variant="outlined" style={MenuStyles.addButton}>追加</Button>
+               <div style={MenuStyles.addButton}>
+                   <Button onClick={addMaterial} size="small" color="secondary" variant="outlined" >追加</Button>
+               </div>
            </div>
     )
 }
 
 const MenuStyles = {
   material: {  marginBottom: 15,textAlign: "center" },
-  materialNameInput: { verticalAlign: "bottom", width: "50%", marginRight: 15 },
-  amountInput: {verticalAlign: "bottom",width: "20%", marginRight: 15},
-  unitInput: { verticalAlign: "bottom" , width: "10%"},
-  deleteButton: { verticalAlign: "bottom" },
-  addButton: { marginTop: 20 }
+  materialRow: { display: 'flex', alignItems: 'center' },
+  materialNameInput: {  padding: '0 5px',flex: '3 1 50px' },
+  amountInput: { padding: '0 5px',  flex: '1 0 50px' },
+  unitInput: { padding: '0 5px', flex: '0 0 50px' },
+  deleteButton: { flex: '1,0,auto'},
+  addButton: { marginTop: 20, display: 'flex', justifyContent: 'center' }
 }
 
 export const convertToInputMaterial = (materials)=>{
