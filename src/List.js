@@ -2,13 +2,16 @@ import React, {useEffect, useState } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 import { listMenus } from './graphql/queries'
 import { Link } from 'react-router-dom'
-import { Button,Checkbox } from '@material-ui/core'
+import { Button,Checkbox,TextField } from '@material-ui/core'
 import styles from './styles'
 
 
 function List(props) {
   const [menus, setMenus] = useState([])
   const [checked_flg,setChecked] = useState({})
+  const [nextToken, setNextToken] = useState(null)
+  const [keywordFilter, setKeywordFilter] = useState('')
+  const defaultLimit = 5
 
   useEffect(()=> {
     fetchMenus()
@@ -16,16 +19,32 @@ function List(props) {
 
   async function fetchMenus() {
     try {
-      const menuData = await API.graphql(graphqlOperation(listMenus))
-      const menus = menuData.data.listMenus.items
-      setMenus(menus)
+      const limit = props.limit ? props.limit : defaultLimit
+      const menuData = await API.graphql(graphqlOperation(listMenus,{limit: limit, nextToken: nextToken}))
 
-      const checked_flg = {}
-      for(const menu of menus) {
-          checked_flg[menu.id] = false
+      const newMenus = menuData.data.listMenus.items
+      const newToken = menuData.data.listMenus.nextToken
+      setMenus(menus.concat(newMenus))
+      setNextToken(newToken)
+
+      const new_checked_flg = {}
+      for(const menu of newMenus) {
+          new_checked_flg[menu.id] = false
       }
-      setChecked(checked_flg)
+      setChecked(Object.assign(checked_flg,new_checked_flg))
     } catch(err) { console.log(err)}
+  }
+
+  function filterByKeyword(event) {
+    const keyword = event.target.value
+    setKeywordFilter(keyword)
+  }
+
+  function matchFilter(value) {
+    if(keywordFilter.length > 0) {
+      return value.match(`.*${keywordFilter}.*`) != null
+    }
+    return true
   }
 
   function checkMenu(event) {
@@ -49,17 +68,24 @@ function List(props) {
     <div style={styles.container}>
       <div style={styles.main}>
         <h2>メニュー一覧</h2>
+          <TextField value={keywordFilter} onChange={filterByKeyword} label="キーワードでフィルタ" size="small" variant="outlined" />
         {
           menus.map((menu, index) => (
-            <div key={menu.id} style={ListStyles.menu}>
-              <Checkbox id={menu.id} checked={checked_flg[menu.id]} onChange={checkMenu} style={ListStyles.menuName} />
-              <label htmlFor={menu.id} ><Link to={{pathname: `./edit/${menu.id}`,state: {menu: menu}}}> {menu.name}</Link></label>
-            </div>
+            matchFilter(menu.name) && (
+              <div key={menu.id} style={ListStyles.menu} >
+                <Checkbox id={menu.id} checked={checked_flg[menu.id]} onChange={checkMenu} style={ListStyles.menuName} />
+                <label htmlFor={menu.id} ><Link to={{ pathname: `./edit/${menu.id}`, state: { menu: menu } }}> {menu.name}</Link></label>
+              </div>
+            )
           ))
         }
+        {nextToken && (
+          <div style={ListStyles.loadButtonContainer}>
+              <Button onClick={fetchMenus} variant="outlined" color="secondary" size="small" style={ListStyles.loadButton}>次の{props.limit ? props.limit : defaultLimit}件を表示</Button>
+          </div>
+        )}
       </div>
       <div style={styles.footer}>
-        {/* <button style={styles.footerButton} onClick={gotoBuyList}>リスト</button> */}
         <Button style={ListStyles.footerButton} onClick={gotoBuyList} variant="contained" color="primary">リスト</Button>
         <Button style={ListStyles.footerButton} onClick={gotoAdd} variant="contained" color="primary">追加</Button>
       </div>
@@ -72,6 +98,8 @@ const ListStyles = {
   menu: {  marginBottom: 15 },
   input: { border: 'none', backgroundColor: '#ddd', marginBottom: 10, padding: 8, fontSize: 18 },
   menuName: { fontSize: 20, fontWeight: 'bold' },
+  loadButtonContainer: { width: "100%",display: "flex", justifyContent: "center", flexDirection: "row" },
+  loadButton: { width: "80%" },
   footerButton: { width: '40%', margin: '0 5%'}
 }
 

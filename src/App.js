@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path='/' component={List} />
+        <Route exact path='/' render={()=><List limit={20} />} />
         <Route path='/buylist' render={(props)=><BuyList {...props} />}/>
         <Route path='/add' component={Add} />
         <Route path='/edit/:id' render={(props)=><Edit {...props} />} />
