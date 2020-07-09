@@ -11,7 +11,7 @@ import MenuInput,{convertToInputMaterial} from './MenuInput'
 function Edit(props) {
    const [title,setTitle]  = useState('')
    const [materials,setMaterials] = useState([])
-   const [notice,setNotice] = useState('')
+   const [notice,setNotice] = useState({status: 'none', message: ''})
    const {id} = useParams()
 
    useEffect(()=>{
@@ -32,10 +32,10 @@ function Edit(props) {
             const result = await API.graphql(graphqlOperation(deleteMenu,{input: {id: id}}))
             
             console.log(result)
-            setNotice('削除しました')
+            setNotice({status: 'warning', message: '削除しました'})
         } catch(err) {
             console.error(err)
-            setNotice('削除に失敗しました')
+            setNotice({status: 'error',message: '削除に失敗しました'})
         }
     }
 
@@ -45,10 +45,10 @@ function Edit(props) {
             try {
                 const result = await API.graphql(graphqlOperation(updateMenu,{input: {id: id, name: title,materials:varibale_materials}}))
                 console.log(result)
-                setNotice('更新しました')
+                setNotice({status: 'success',message: '更新しました'})
             } catch(err) {
                 console.error(err)
-                setNotice('更新に失敗しました')
+                setNotice({status: 'error',message: '更新に失敗しました'})
             }
         }
     }
@@ -60,7 +60,8 @@ function Edit(props) {
                 materials={materials} 
                 title={title} 
                 setTitle={setTitle}
-                setMaterials={setMaterials}/>
+                setMaterials={setMaterials}
+                setNotice={setNotice}/>
                <div style={styles.footer}>
                    <Button style={ListStyles.footerButton} onClick={requestUpdate} variant="contained" color="primary" id="updateButton">更新</Button>
                    <Button style={ListStyles.footerButton} onClick={requestDelete} variant="contained" color="secondary" id="deleteButton">削除</Button>

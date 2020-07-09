@@ -1,17 +1,33 @@
 
 import React from 'react'
-import { TextField,Button,IconButton,FormControl,InputLabel,Select,MenuItem} from '@material-ui/core'
+import { 
+    TextField,
+    Button,
+    IconButton,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Snackbar
+} from '@material-ui/core'
+import MuiAlert from '@material-ui/lab/Alert'
 import ClearButton  from '@material-ui/icons/Clear'
 import crypto from 'crypto'
+import { sectionFooterPrimaryContent } from 'aws-amplify'
 
 function MenuInput(props) {
     const {
         setTitle,
         setMaterials,
+        setNotice,
         title,
         materials,
         notice,
     } = props
+    const noticeMessage = {
+        success: "登録しました",
+        error: "登録に失敗しました"
+    }
     function changeTitle(event) {
         setTitle(event.target.value)
     }
@@ -45,9 +61,12 @@ function MenuInput(props) {
         updated_materials[index].unit = event.target.value
         setMaterials(updated_materials)
     }
+
     return(
            <div>
-               <p>{notice}</p>
+               <Snackbar open={notice.status != "none"} autoHideDuration={6000} onClose={()=>{setNotice({status: "none", message: ""})}} >
+                   <MuiAlert elevation={6} severity={notice.status}>{notice.message}</MuiAlert>
+               </Snackbar>
                <div style={MenuStyles.menu}><TextField  value={title} onChange={changeTitle} variant='filled' label='メニューの名前' size="small"  className="title"/></div>
                <p>買うもの</p>
                {

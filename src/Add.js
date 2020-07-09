@@ -9,7 +9,7 @@ import MenuInput,{convertToInputMaterial} from './MenuInput'
 function Add() {
     const [title,setTitle] = useState('')
     const [materials,setMaterials] = useState(initMaterials())
-    const [notice,setNotice] = useState('')
+    const [notice,setNotice] = useState({status: "none", message: ""})
 
     function initMaterials() {
         const materials = []
@@ -29,10 +29,10 @@ function Add() {
             try {
                 const result = await API.graphql(graphqlOperation(createMenu,{input: {name: title,materials:varibale_materials}}))
                 console.log(result)
-                setNotice('登録しました')
+                setNotice({status: 'success',message: '登録しました'})
             } catch(err) {
                 console.error(err)
-                setNotice('登録に失敗しました')
+                setNotice({status: 'error',message: '登録に失敗しました'})
             }
         }
     }
@@ -43,6 +43,7 @@ function Add() {
                     notice={notice} 
                     setTitle={setTitle}
                     setMaterials={setMaterials}
+                    setNotice={setNotice}
                     materials={materials} 
                     title={title} />
            </div>

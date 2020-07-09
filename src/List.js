@@ -2,7 +2,8 @@ import React, {useEffect, useState } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 import { listMenus } from './graphql/queries'
 import { Link } from 'react-router-dom'
-import { Button,Checkbox,TextField } from '@material-ui/core'
+import { Button,Checkbox,TextField,InputAdornment,IconButton } from '@material-ui/core'
+import ClearButton  from '@material-ui/icons/Clear'
 import styles from './styles'
 
 
@@ -68,7 +69,11 @@ function List(props) {
     <div style={styles.container}>
       <div style={styles.main}>
         <h2>メニュー一覧</h2>
-          <TextField value={keywordFilter} onChange={filterByKeyword} label="キーワードでフィルタ" size="small" variant="outlined" />
+          <TextField value={keywordFilter} onChange={filterByKeyword} label="キーワードでフィルタ" size="small" variant="outlined" InputProps={{
+            endAdornment: <InputAdornment position="end">
+              <IconButton onClick={(e)=>{filterByKeyword({target:{value: ""}})}}><ClearButton /></IconButton>
+            </InputAdornment>
+          }} />
         {
           menus.map((menu, index) => (
             matchFilter(menu.name) && (
