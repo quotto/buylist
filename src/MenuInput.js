@@ -65,7 +65,7 @@ function MenuInput(props) {
     return(
            <div>
                <Snackbar open={notice.status != "none"} autoHideDuration={6000} onClose={()=>{setNotice({status: "none", message: ""})}} >
-                   <MuiAlert elevation={6} severity={notice.status}>{notice.message}</MuiAlert>
+                   <MuiAlert elevation={6} variant="filled" severity={notice.status}>{notice.message}</MuiAlert>
                </Snackbar>
                <div style={MenuStyles.menu}><TextField  value={title} onChange={changeTitle} variant='filled' label='メニューの名前' size="small"  className="title"/></div>
                <p>買うもの</p>
