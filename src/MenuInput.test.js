@@ -108,6 +108,7 @@ describe("convertToInputMaterial",()=>{
 describe("MenuInput",()=>{
     const setTitle = jest.fn()
     const setMaterials = jest.fn()
+    const setNotice = jest.fn()
     it("render from edit",()=>{
         const wrapper = mount(<MenuInput 
             setTitle={setTitle} 
@@ -138,6 +139,7 @@ describe("MenuInput",()=>{
                 ]
             }
             notice=""
+            setNotice={setNotice}
              />)
        expect(wrapper.find(".title").hostNodes().find("input").props().value).toBe("メニュー1")
        expect(wrapper.find(".inputMaterialName").hostNodes().length).toBe(4)
@@ -157,6 +159,7 @@ describe("MenuInput",()=>{
        expect(wrapper.find(".inputUnit").hostNodes().at(3).find("input").props().value).toBe("HON")
     })
     it("change value",()=>{
+        const setNotice=jest.fn()
         const wrapper = mount(<MenuInput 
             setTitle={setTitle} 
             setMaterials={setMaterials}
@@ -181,6 +184,7 @@ describe("MenuInput",()=>{
             ]
             }
             notice=""
+            setNotice={setNotice}
              />)
         wrapper.find(".title").hostNodes().find("input").simulate("change",{target: {value: "メニュー11"}})
         wrapper.find(".inputMaterialName").hostNodes().at(0).find("input").simulate("change",{target: {value: "材料11"}})
