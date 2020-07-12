@@ -23,4 +23,5 @@ enum Unit {
   STUMP #株
   BUNCH #束
   HON  #本
+  HIKI #匹
 }

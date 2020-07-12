@@ -14,6 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert'
 import ClearButton  from '@material-ui/icons/Clear'
 import crypto from 'crypto'
 import { sectionFooterPrimaryContent } from 'aws-amplify'
+import UnitMap from './unit_map'
 
 function MenuInput(props) {
     const {
@@ -79,14 +80,10 @@ function MenuInput(props) {
                            <TextField key={`amount-${index}`} value={material.amount} onChange={(e)=>updateMaterialAmount(e,index)} variant="outlined" size="small" style={MenuStyles.amountInput} className="inputAmount" label="容量"/>
                            <FormControl style={MenuStyles.unitInput}>
                                <Select value={material.unit} onChange={(e)=>updateMaterialUnit(e,index)} className="inputUnit">
-                                   <MenuItem value="" />
-                                   <MenuItem value="GRAM">g</MenuItem>
-                                   <MenuItem value="BAG">袋</MenuItem>
-                                   <MenuItem value="PACK">パック</MenuItem>
-                                   <MenuItem value="NUM">個</MenuItem>
-                                   <MenuItem value="STUMP">株</MenuItem>
-                                   <MenuItem value="BUNCH">束</MenuItem>
-                                   <MenuItem value="HON">本</MenuItem>
+                                   <MenuItem key="none" value="" />
+                                   {Object.keys(UnitMap).map(key => (
+                                       <MenuItem key={key} value={key}>{UnitMap[key]}</MenuItem>
+                                   ))}
                                 </Select>
                            </FormControl>
                         </div>

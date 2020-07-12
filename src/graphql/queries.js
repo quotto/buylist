@@ -32,6 +32,10 @@ export const listMenus = /* GraphQL */ `
         materials {
           hash
           name
+          amount {
+            value
+            unit
+          }
         }
         createdAt
         updatedAt
