@@ -11,8 +11,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 const theme = createMuiTheme()
 const useStyles = makeStyles({
     footerButton: {
-      width: '40%',
-      margin: '0 5%'
+      width: '26%',
+      margin: '0 2%'
     },
     addButton: {
       backgroundColor: theme.palette.warning.main,
@@ -128,7 +128,7 @@ function List(props) {
       <div style={styles.footer}>
         <Button className={`${classes.footerButton} ${classes.listButton}`} onClick={gotoBuyList} variant="contained">リスト</Button>
         <Button className={`${classes.footerButton} ${classes.addButton}`} onClick={gotoAdd} variant="contained" >追加</Button>
-        <Button className={`${classes.footerButton} ${classes.unitButton}`} onClick={gotoUnitEdit} variant="contained" >単位の設定</Button>
+        <Button className={`${classes.footerButton} ${classes.unitButton}`} onClick={gotoUnitEdit} variant="contained" >単位</Button>
       </div>
     </div>
   )
