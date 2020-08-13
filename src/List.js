@@ -5,9 +5,31 @@ import { Link } from 'react-router-dom'
 import { Button,Checkbox,TextField,InputAdornment,IconButton } from '@material-ui/core'
 import ClearButton  from '@material-ui/icons/Clear'
 import styles from './styles'
+import { createMuiTheme } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
+const theme = createMuiTheme()
+const useStyles = makeStyles({
+    footerButton: {
+      width: '40%',
+      margin: '0 5%'
+    },
+    addButton: {
+      backgroundColor: theme.palette.warning.main,
+      color: theme.palette.primary.contrastText
+    },
+    listButton: {
+      backgroundColor: theme.palette.info.main,
+      color: theme.palette.primary.contrastText
+    },
+    unitButton: {
+      backgroundColor: theme.palette.success.main,
+      color: theme.palette.primary.contrastText
+    }
+  })
 
 function List(props) {
+  const classes = useStyles()
   const [menus, setMenus] = useState([])
   const [checked_flg,setChecked] = useState({})
   const [nextToken, setNextToken] = useState(null)
@@ -65,6 +87,10 @@ function List(props) {
     props.history.push('/add')
   }
 
+  function gotoUnitEdit() {
+    props.history.push('/unit')
+  }
+
   return (
     <div style={styles.container}>
       <div style={styles.main}>
@@ -91,8 +117,9 @@ function List(props) {
         )}
       </div>
       <div style={styles.footer}>
-        <Button style={ListStyles.footerButton} onClick={gotoBuyList} variant="contained" color="primary">リスト</Button>
-        <Button style={ListStyles.footerButton} onClick={gotoAdd} variant="contained" color="primary">追加</Button>
+        <Button className={`${classes.footerButton} ${classes.listButton}`} onClick={gotoBuyList} variant="contained">リスト</Button>
+        <Button className={`${classes.footerButton} ${classes.addButton}`} onClick={gotoAdd} variant="contained" >追加</Button>
+        <Button className={`${classes.footerButton} ${classes.unitButton}`} onClick={gotoUnitEdit} variant="contained" >単位の設定</Button>
       </div>
     </div>
   )

@@ -55,3 +55,33 @@ export const onDeleteMenu = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUnit = /* GraphQL */ `
+  subscription OnCreateUnit {
+    onCreateUnit {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUnit = /* GraphQL */ `
+  subscription OnUpdateUnit {
+    onUpdateUnit {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUnit = /* GraphQL */ `
+  subscription OnDeleteUnit {
+    onDeleteUnit {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;

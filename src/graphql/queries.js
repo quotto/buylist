@@ -32,11 +32,34 @@ export const listMenus = /* GraphQL */ `
         materials {
           hash
           name
-          amount {
-            value
-            unit
-          }
         }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUnit = /* GraphQL */ `
+  query GetUnit($id: ID!) {
+    getUnit(id: $id) {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUnits = /* GraphQL */ `
+  query ListUnits(
+    $filter: ModelUnitFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUnits(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        value
         createdAt
         updatedAt
       }

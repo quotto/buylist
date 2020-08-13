@@ -64,3 +64,42 @@ export const deleteMenu = /* GraphQL */ `
     }
   }
 `;
+export const createUnit = /* GraphQL */ `
+  mutation CreateUnit(
+    $input: CreateUnitInput!
+    $condition: ModelUnitConditionInput
+  ) {
+    createUnit(input: $input, condition: $condition) {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUnit = /* GraphQL */ `
+  mutation UpdateUnit(
+    $input: UpdateUnitInput!
+    $condition: ModelUnitConditionInput
+  ) {
+    updateUnit(input: $input, condition: $condition) {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUnit = /* GraphQL */ `
+  mutation DeleteUnit(
+    $input: DeleteUnitInput!
+    $condition: ModelUnitConditionInput
+  ) {
+    deleteUnit(input: $input, condition: $condition) {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -4,6 +4,7 @@ import List from './List'
 import BuyList from './BuyList'
 import Add from './Add'
 import Edit from './Edit'
+import Unit from './UnitEdit'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path='/buylist' render={(props)=><BuyList {...props} />}/>
         <Route path='/add' component={Add} />
         <Route path='/edit/:id' render={(props)=><Edit {...props} />} />
+        <Route path='/unit' render={(props)=><Unit {...props} />} />
       </Switch>
     </Router>
   )

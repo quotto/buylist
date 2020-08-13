@@ -12,16 +12,10 @@ type Material {
 
 type Amount {
   value: Float!
-  unit: Unit!
+  unit: String!
 }
 
-enum Unit {
-  GRAM #g
-  BAG  #袋
-  PACK #パック
-  NUM  #個
-  STUMP #株
-  BUNCH #束
-  HON  #本
-  HIKI #匹
+type Unit @model {
+  id: ID!
+  value: String!
 }
