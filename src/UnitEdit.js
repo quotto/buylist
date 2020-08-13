@@ -89,7 +89,7 @@ function UnitEdit(props) {
                             <IconButton style={UnitStyles.deleteButton} onClick={(e) => deleteUnitInput(index)} color="secondary">
                                 <ClearButton />
                             </IconButton>
-                            <TextField style={UnitStyles.unitInput} onChange={(e) => updateUnitValue(e, index)} value={unit.updateValue} />
+                            <TextField style={UnitStyles.unitInput} onChange={(e) => updateUnitValue(e, index)} variant="outlined" size="small" value={unit.updateValue} />
                         </div>
                     ))
                 }
@@ -109,8 +109,8 @@ function UnitEdit(props) {
 
 const UnitStyles = {
   unitRow: { display: 'flex', alignItems: 'center' },
-  unitInput: { padding: '0 5px', flex: '0 0 50px' },
-  deleteButton: { flex: '1,0,auto'},
+  unitInput: { padding: '0 5px', flex: '0.5 0 50px' },
+  deleteButton: { flex: '0.3,0,auto'},
   addButton: {width: '100%',display: 'flex',alignItems: 'center',flexDirection: 'column'},
   footerButton: { width: '40%', margin: '0 5%'}
 }

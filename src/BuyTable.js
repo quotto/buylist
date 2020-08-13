@@ -22,7 +22,7 @@ function BuyTable(props) {
                             if(material.hash === material_hash) {
                                 val = "○"
                                 if (material.amount && material.amount.value && material.amount.unit) {
-                                    val =  `${material.amount.value}${unit_map[material.amount.unit]}`
+                                    val =  `${material.amount.value}${material.amount.unit}`
                                 }
                                 return
                             }

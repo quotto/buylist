@@ -1,11 +1,12 @@
 
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { API,graphqlOperation} from 'aws-amplify'
+import { listUnits } from './graphql/queries'
 import { 
     TextField,
     Button,
     IconButton,
     FormControl,
-    InputLabel,
     Select,
     MenuItem,
     Snackbar
@@ -13,8 +14,6 @@ import {
 import MuiAlert from '@material-ui/lab/Alert'
 import ClearButton  from '@material-ui/icons/Clear'
 import crypto from 'crypto'
-import { sectionFooterPrimaryContent } from 'aws-amplify'
-import UnitMap from './unit_map'
 
 function MenuInput(props) {
     const {
@@ -29,6 +28,17 @@ function MenuInput(props) {
         success: "登録しました",
         error: "登録に失敗しました"
     }
+    const [unitList, setUnitList] = useState([])
+    console.debug(materials)
+    useEffect(()=>{
+        fetchUnitList()
+    },[])
+
+    async function fetchUnitList() {
+        const result = await API.graphql(graphqlOperation(listUnits))
+        setUnitList(result.data.listUnits.items)
+    }
+
     function changeTitle(event) {
         setTitle(event.target.value)
     }
@@ -81,8 +91,8 @@ function MenuInput(props) {
                            <FormControl style={MenuStyles.unitInput}>
                                <Select value={material.unit} onChange={(e)=>updateMaterialUnit(e,index)} className="inputUnit">
                                    <MenuItem key="none" value="" />
-                                   {Object.keys(UnitMap).map(key => (
-                                       <MenuItem key={key} value={key}>{UnitMap[key]}</MenuItem>
+                                   {unitList.map(unit => (
+                                       <MenuItem key={unit.id} value={unit.value}>{unit.value}</MenuItem>
                                    ))}
                                 </Select>
                            </FormControl>

@@ -16,14 +16,23 @@ const useStyles = makeStyles({
     },
     addButton: {
       backgroundColor: theme.palette.warning.main,
+      "&:hover": {
+        backgroundColor: theme.palette.warning.dark,
+      },
       color: theme.palette.primary.contrastText
     },
     listButton: {
       backgroundColor: theme.palette.info.main,
+      "&:hover": {
+        backgroundColor: theme.palette.info.dark,
+      },
       color: theme.palette.primary.contrastText
     },
     unitButton: {
       backgroundColor: theme.palette.success.main,
+      "&:hover": {
+        backgroundColor: theme.palette.success.dark,
+      },
       color: theme.palette.primary.contrastText
     }
   })
@@ -132,7 +141,6 @@ const ListStyles = {
   menuName: { fontSize: 20, fontWeight: 'bold' },
   loadButtonContainer: { width: "100%",display: "flex", justifyContent: "center", flexDirection: "row" },
   loadButton: { width: "80%" },
-  footerButton: { width: '40%', margin: '0 5%'}
 }
 
 export default List;

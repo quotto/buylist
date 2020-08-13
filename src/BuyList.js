@@ -35,7 +35,7 @@ function BuyList(props) {
         for (const hash in materials_map) {
             if (Object.keys(materials_map[hash].amount).length > 0) {
                 for (const unit in materials_map[hash].amount) {
-                    list.push(<li key={hash+unit}>{materials_map[hash].name}&nbsp;{materials_map[hash].amount[unit]}{unit_map[unit]}</li>)
+                    list.push(<li key={hash+unit}>{materials_map[hash].name}&nbsp;{materials_map[hash].amount[unit]}{unit}</li>)
                 }
             } else {
                 list.push(<li key={hash}>{materials_map[hash].name}</li>)

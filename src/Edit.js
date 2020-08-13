@@ -41,6 +41,7 @@ function Edit(props) {
 
     async function requestUpdate() {
         const varibale_materials = convertToInputMaterial(materials)
+        console.debug(varibale_materials)
         if(Object.keys(varibale_materials).length > 0 && title.length > 0) {
             try {
                 const result = await API.graphql(graphqlOperation(updateMenu,{input: {id: id, name: title,materials:varibale_materials}}))
